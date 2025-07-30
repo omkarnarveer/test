@@ -1,0 +1,89 @@
+{% extends "base.html" %}
+
+{% block extra_js %}
+<script src="{{ url_for('static', filename='js/charts.js') }}"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const chartData = JSON.parse('{{ chart_data | safe }}');
+        const salesChart = new SalesChart('salesChart', chartData);
+    });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="card-title">
+                    <i class="bi bi-graph-up"></i> Sales Predictions vs Actual
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="chart-container">
+                    <canvas id="salesChart" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-4">
+        <div class="card shadow mb-4">
+            <div class="card-header bg-info text-white">
+                <h5 class="card-title">
+                    <i class="bi bi-speedometer2"></i> Model Performance
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-hover">
+                        <tr>
+                            <th>R² Score</th>
+                            <td>{{ metrics.r2_score }}</td>
+                        </tr>
+                        <tr>
+                            <th>Learning Rate</th>
+                            <td>{{ "%.4f"|format(metrics.best_params.learning_rate) }}</td>
+                        </tr>
+                        <tr>
+                            <th>Hidden Neurons</th>
+                            <td>{{ metrics.best_params.hidden_layers }}</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card shadow">
+            <div class="card-header bg-primary text-white">
+                <h5 class="card-title">
+                    <i class="bi bi-diagram-3"></i> System Architecture
+                </h5>
+            </div>
+            <div class="card-body">
+                <div class="architecture-flow">
+                    <div class="flow-step bg-info text-white">
+                        <i class="bi bi-sliders"></i> Fuzzy Preprocessing
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step bg-warning text-dark">
+                        <i class="bi bi-cpu"></i> Neural Network
+                    </div>
+                    <div class="flow-arrow">→</div>
+                    <div class="flow-step bg-success text-white">
+                        <i class="bi bi-dna"></i> GA Optimization
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-12">
+        <a href="/" class="btn btn-outline-primary">
+            <i class="bi bi-arrow-left"></i> Back to Configuration
+        </a>
+    </div>
+</div>
+{% endblock %}

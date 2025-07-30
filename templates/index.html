@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="card shadow-lg">
+            <div class="card-header bg-primary text-white">
+                <h3 class="card-title text-center">
+                    <i class="bi bi-input-cursor-text"></i> Configure Prediction
+                </h3>
+            </div>
+            <div class="card-body">
+                <form method="POST">
+                    <div class="mb-3">
+                        <label for="train_size" class="form-label">Training Data Percentage</label>
+                        <input type="range" class="form-range" min="50" max="95" step="5" 
+                               id="train_size" name="train_size" value="80">
+                        <div class="d-flex justify-content-between">
+                            <small>50%</small>
+                            <small>95%</small>
+                        </div>
+                    </div>
+                    
+                    <div class="alert alert-info">
+                        <i class="bi bi-info-circle"></i> This demo uses synthetic data with:
+                        <ul class="mb-0">
+                            <li>Price sensitivity</li>
+                            <li>Promotion effects</li>
+                            <li>Seasonal patterns</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary btn-lg">
+                            <i class="bi bi-lightning-charge"></i> Run Hybrid Prediction
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
