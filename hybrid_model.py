@@ -21,11 +21,7 @@ class HybridSalesPredictor:
             np.sqrt(X['price_max'] - X['price']),
             np.log(X['price'] + 1)
         )
-        X['promo_effect'] = np.where(
-            X['promotion'] > 0,
-            X['promotion'] * 1.5,
-            X['seasonality'] * 0.8
-        )
+
         return X
 
     def train(self, X, y):
